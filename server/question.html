@@ -1,39 +1,25 @@
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Math Helper</title>
-<style>
-  body { max-width: 38rem; margin: 10vh auto; padding: 0 1.25rem; color: #172f31; font: 1.1rem/1.55 "DM Sans", system-ui, sans-serif; background: #fafaf5; }
-  label, textarea, button { display: block; font: inherit; }
-  textarea { box-sizing: border-box; width: 100%; padding: .7rem; margin: .5rem 0 1rem; }
-  button { padding: .5rem 1.3rem; border: 0; border-radius: .35rem; background: #175d56; color: white; }
-  output { display: block; margin-top: 2rem; white-space: pre-wrap; }
-</style>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math Helper · Study desk</title><link href="/style.css" rel="stylesheet">
+</head><body>
+<header><div class="bar"><a class="brand" href="/" aria-label="Math Helper home"><span class="logo" aria-hidden="true">÷</span> Math Helper</a><a href="#privacy" id="privacy-link">Privacy</a></div></header>
 <main>
-  <h1>Math Helper</h1>
-  <form>
-    <label for="question">What math question are you working on?</label>
-    <textarea id="question" rows="4" required></textarea>
-    <button>Ask Math Helper</button>
-  </form>
-  <output aria-live="polite"></output>
-</main>
-<script>
-  const form = document.querySelector('form');
-  const result = document.querySelector('output');
-  form.onsubmit = async event => {
-    event.preventDefault();
-    form.querySelector('button').disabled = true;
-    result.textContent = 'Working on your question…';
-    try {
-      const response = await fetch('/ask', { method: 'POST', body: form.elements.question.value });
-      result.textContent = await response.text();
-    } catch {
-      result.textContent = 'Could not reach Math Helper.';
-    } finally {
-      form.querySelector('button').disabled = false;
-    }
-  };
-</script>
-</html>
+<section class="hero"><div><h1>Your math<br><em>study desk.</em></h1><p>Get ready for a test or work through a tricky problem with your own math tutor.</p></div>
+<div class="art" aria-hidden="true"><div class="gridpaper"></div><div class="fraction"><b>¾</b><i></i></div><div class="ruler"></div><div class="times">×</div></div></section>
+<h2>What do you need?</h2><nav id="modes" aria-label="Choose tutoring activity"></nav>
+<div class="workspace"><section class="panel tutoring"><form id="ask-form">
+<h2 id="activity">Study tips</h2><label for="question" id="label">What’s on your math test?</label>
+<textarea id="question" maxlength="4000" rows="4"></textarea>
+<button type="button" class="example" id="example"></button>
+<div class="actions"><label class="attach" for="file">＋ Add a photo</label><input type="file" id="file" accept="image/png,image/jpeg,image/webp">
+<button type="submit" class="submit" id="send">Get study tips</button></div>
+<div id="attachment" hidden><img id="preview" alt="Selected worksheet"><button type="button" id="remove">Remove photo</button>
+<label><input type="checkbox" id="review"> I checked this photo and removed names and private details.</label></div>
+<p class="reminder">Share only the homework question. Remove names and other private details first.</p>
+</form>
+<section id="response" hidden><h3>Your tutor</h3><output aria-live="polite"></output></section></section>
+<aside class="panel checklist"><span class="tabmark" aria-hidden="true"></span><h2>My study checklist</h2><p>Try these small study goals.</p><div id="tasks"></div><progress id="progress" max="3" value="0" aria-label="Study goals complete"></progress><small id="count" role="status"></small></aside></div>
+<details id="privacy"><summary>Who can see my question?</summary><p>Your question and photo go through this computer to OpenAI. Someone managing this computer could see them. Math Helper keeps no chat history. Only your checklist marks are saved in this browser.</p><p>OpenAI may keep safety logs for up to 30 days by default. Authorized reviewers may see flagged content, and some safety or legal cases can be kept longer. <a href="https://developers.openai.com/api/docs/guides/your-data" target="_blank" rel="noreferrer">OpenAI data controls</a></p></details>
+</main><script type="module" src="/app.js"></script></body></html>

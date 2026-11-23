@@ -15,7 +15,7 @@ function expiryTime(value) {
 async function lookup() {
   const { KEYGEN_URL, KEYGEN_TOKEN } = process.env;
   if (!KEYGEN_URL || !KEYGEN_TOKEN || [KEYGEN_URL, KEYGEN_TOKEN].includes('paste-here')) {
-    throw new DisplayError('Fill in the two MindDo values in .env and restart Math Helper.');
+    throw new DisplayError('Math Helper needs its two MindDo settings. Ask the person who runs it to check them.');
   }
   const endpoint = new URL(KEYGEN_URL.replace(/\/+$/, '') + '/api/lookup-key');
   if (endpoint.protocol !== 'https:') {

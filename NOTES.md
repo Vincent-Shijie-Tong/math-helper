@@ -4,6 +4,15 @@
 
 From the project folder, run `node --env-file=.env server/app.mjs` with Node.js 24. Open http://127.0.0.1:3000 on this computer. Restart after editing .env.
 
+## Put it online with Vercel
+
+1. In Vercel, choose **Add New → Project** and import the GitHub repository `Vincent-Shijie-Tong/math-helper`.
+2. Use the repository root. The project supplies its settings in `vercel.json`. Vercel serves the page from `public/` and runs the tutor at `/api/ask` as a Node.js function.
+3. Under **Environment Variables**, add `KEYGEN_URL` and `KEYGEN_TOKEN` with your MindDo values for **Production**. Select **Preview** too if you want AI answers in preview deployments. These are the only settings you need to fill in. Keep both values in Vercel and your local ignored `.env`.
+4. Choose **Deploy**. Open the resulting site, choose **Use example question**, then **Get study tips**. After changing environment values in Vercel, redeploy for them to take effect.
+
+Checklist marks stay in the browser for each site address. The online site starts with its own checklist.
+
 ## Version 1
 
 Study tips come first. Homework help, worked steps and answer checks accept a typed question or a worksheet photo. Choose an activity, type a question or use its example, then press the green button.

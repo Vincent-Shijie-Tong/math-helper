@@ -90,7 +90,7 @@ byId('ask-form').onsubmit = async event => {
   controls.forEach(el => { el.disabled = true; });
   show('Thinking…');
   try {
-    const result = await fetch('/ask', {method: 'POST', headers: {'Content-Type':'application/json'},
+    const result = await fetch('/api/ask', {method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ mode: current, question, photo })});
     show(await result.text() || 'Check your internet connection and try again.');
   } catch { show('Check your internet connection and try again.'); }

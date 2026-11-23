@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math Helper</title>
+<style>
+  body { max-width: 38rem; margin: 10vh auto; padding: 0 1.25rem; color: #172f31; font: 1.1rem/1.55 "DM Sans", system-ui, sans-serif; background: #fafaf5; }
+  label, textarea, button { display: block; font: inherit; }
+  textarea { box-sizing: border-box; width: 100%; padding: .7rem; margin: .5rem 0 1rem; }
+  button { padding: .5rem 1.3rem; border: 0; border-radius: .35rem; background: #175d56; color: white; }
+  output { display: block; margin-top: 2rem; white-space: pre-wrap; }
+</style>
+<main>
+  <h1>Math Helper</h1>
+  <form>
+    <label for="question">What math question are you working on?</label>
+    <textarea id="question" rows="4" required></textarea>
+    <button>Ask Math Helper</button>
+  </form>
+  <output aria-live="polite"></output>
+</main>
+<script>
+  const form = document.querySelector('form');
+  const result = document.querySelector('output');
+  form.onsubmit = async event => {
+    event.preventDefault();
+    form.querySelector('button').disabled = true;
+    result.textContent = 'Working on your question…';
+    try {
+      const response = await fetch('/ask', { method: 'POST', body: form.elements.question.value });
+      result.textContent = await response.text();
+    } catch {
+      result.textContent = 'Could not reach Math Helper.';
+    } finally {
+      form.querySelector('button').disabled = false;
+    }
+  };
+</script>
+</html>

@@ -28,12 +28,22 @@ For safety concerns, unclear photos, or a missing topic, use the message reply t
   check: `Check the original problem against the student's answer, using the text and any photo together.
 If the problem or the student's attempt is missing or unreadable, use message to ask for just what is missing.
 Solve independently and accept equivalent answers that meet the problem's requirements.
-In submittedAnswer copy the student's final answer, if any. In expectedAnswer give the independently solved result.
+First fill expectedAnswer from the ORIGINAL problem alone, ignoring all attempted steps. In submittedAnswer
+copy the student's final answer, if any. In verification test that answer against the ORIGINAL problem
+(for equations, substitute it into both sides and evaluate). Recalculate each shown line independently.
 Set answerVerdict by comparing only these two answers. A bad intermediate step cannot make a correct final answer wrong.
 Separately set workVerdict by checking the steps the student actually showed. A correct result cannot make a bad step correct.
 For partial work, check the steps provided and mark the final answer missing. The page supplies the verdict sentence.
-Point to the first incorrect line, show its correction, and explain why. If only an answer was given,
-avoid guessing how the student got it. Finish the feedback with a calculation the student can use to check.`,
+Write mistakeFeedback only when a step or the final answer is wrong. If the work shows a mistake,
+point to the first incorrect step and explain how to fix it. If you only have a wrong answer, look for
+one simple mix-up that actually produces that answer. In matchingCalculation write that mistaken
+calculation (e.g. "3 + 4 = 7" for 3 × 4 answered as 7). Use null if no such calculation is evident
+or if the student already showed the error. The correct solution does not count as a matchingCalculation.
+Use tentative words such as “You may have” when explaining an inferred mistake. If you cannot supply that calculation,
+leave mistakeFeedback empty and the page will ask for their steps. Do not speculate about typos,
+extra digits, carelessness or what the student was thinking. Leave mistakeFeedback empty for correct work.
+Use explanation for the worked solution and
+a calculation the student can use to check it. Avoid repeating the mistake feedback there.`,
 };
 
 const instructions = `You are Math Helper, a kind one-on-one math tutor.
@@ -60,7 +70,8 @@ not count as a second formula. For example, area = length × width finds the are
 width = area ÷ length recovers a known side to check it. Choose relationships specific to the student's topic.
 For EACH one, explain the clue that makes it useful, define unfamiliar symbols using the student's
 quantities and units, substitute the numbers and explain why the operation works. Connect the two
-results in words. Point out one likely mix-up and how to notice it. For a conceptual question,
+results in words. Only the Check my work activity suggests what this particular student may have done wrong.
+In other activities teach the method and describe any common pitfalls in general terms. For a conceptual question,
 use a relevant property and a concrete example or counterexample rather than inventing equations.
 Use plain-text math such as ×, ÷ and cm². The page does not render LaTeX or Markdown.
 Keep clarification questions and safety replies brief.
@@ -121,7 +132,13 @@ export async function askAI(mode, question, photo, grade = null) {
           incorrect: 'One of your steps needs a correction.',
           none: '',
         }[result.workVerdict];
-        return {kind: 'lesson', explanation: [answerLabel, workLabel].filter(Boolean).join(' ') + '\n\n' + result.explanation,
+        const verdict = [answerLabel, workLabel].filter(Boolean).join(' ');
+        const hasMistake = result.answerVerdict === 'incorrect' || result.workVerdict === 'incorrect';
+        const hasClue = result.workVerdict === 'incorrect' || result.matchingCalculation?.trim();
+        const feedback = hasClue && result.mistakeFeedback.trim()
+          || 'Can you show your steps so we can find where the answer changed?';
+        const paragraphs = [verdict, hasMistake && feedback, result.explanation];
+        return {kind: 'lesson', explanation: paragraphs.filter(Boolean).join('\n\n'),
           table: result.table, takeaway: result.takeaway};
       }
       if (mode === 'study') {
@@ -167,9 +184,10 @@ function replyFormat(name, fields) {
 }
 const lessonFormat = replyFormat('lesson', {explanation: string});
 const checkFormat = replyFormat('answer_check', {
-    submittedAnswer: string, expectedAnswer: string,
+    expectedAnswer: string, submittedAnswer: string, verification: string,
     answerVerdict: {type: 'string', enum: ['correct', 'incorrect', 'missing']},
     workVerdict: {type: 'string', enum: ['correct', 'incorrect', 'none']},
+    matchingCalculation: {type: ['string', 'null']}, mistakeFeedback: string,
     explanation: string,
 });
 const studyFormat = replyFormat('study_guide', {

@@ -34,6 +34,8 @@ All four activities keep tutoring focused on math. Unrelated requests get a shor
 
 **Check my work** checks the final answer and any steps the student shares. Choose the activity, enter the problem and your answer (or attach a clear photo), then select **Check my answer**. In live checks, it accepted 2/4 for 1/4 + 1/4, corrected a worksheet showing 5 × 6 = 35, and recognized a correct algebra answer reached through an incorrect step. It also checked unfinished work and asked for the original problem when given only an answer.
 
+Only **Check my work** gives feedback about a student's likely mistake. For example, if a student writes 3 × 4 = 7, the tutor can show that 3 + 4 gives 7 and explain how to count three groups of four. It points to the first wrong step when the student shares their work and asks to see the steps when the answer alone gives no clear clue.
+
 ## Next
 
 Rehearse the short demo. Start with the fraction quiz example, check an incorrect multiplication answer, then tick a study goal and reload. Ask your teacher to check the explanations before your competition video.

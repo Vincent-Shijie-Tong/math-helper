@@ -32,6 +32,8 @@ Worked math answers teach two related formulas or rules. The tutor explains when
 
 All four activities keep tutoring focused on math. Unrelated requests get a short invitation to ask a math question. For mixed questions, the tutor addresses the math part. Worked answers and study guides include a labeled table and explain how its rows help solve or check the problem.
 
+**Check my work** checks the final answer and any steps the student shares. Choose the activity, enter the problem and your answer (or attach a clear photo), then select **Check my answer**. In live checks, it accepted 2/4 for 1/4 + 1/4, corrected a worksheet showing 5 × 6 = 35, and recognized a correct algebra answer reached through an incorrect step. It also checked unfinished work and asked for the original problem when given only an answer.
+
 ## Next
 
 Rehearse the short demo. Start with the fraction quiz example, check an incorrect multiplication answer, then tick a study goal and reload. Ask your teacher to check the explanations before your competition video.

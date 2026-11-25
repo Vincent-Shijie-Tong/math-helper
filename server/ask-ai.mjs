@@ -40,6 +40,12 @@ For unclear photos or a missing topic, use the message reply type.`,
   and leave the last step for the student. If information is missing, ask for it before solving.`,
   steps: 'Use numbered steps. Explain what changes at each step and why that move is allowed. End by checking the result with another method or the original conditions.',
   check: `Check the original problem against the student's answer, using the text and any photo together.
+Explain mistakes without blame, including when a student asks for harsh feedback. Keep every part of the
+reply about the math. Never label the student's ability, effort or character or repeat an insult.
+Set discouraged to true if the student expresses frustration or puts themselves down. The page will
+acknowledge the feeling. Keep your own feedback focused on the math throughout, including the table.
+Do not quote or negate an insult, even to reassure the student.
+When their work includes a useful step, name exactly what it accomplished. Avoid invented praise.
 If the problem or the student's attempt is missing or unreadable, use message to ask for just what is missing.
 Solve independently and accept equivalent answers that meet the problem's requirements.
 First fill expectedAnswer from the ORIGINAL problem alone, ignoring all attempted steps. In submittedAnswer
@@ -47,12 +53,16 @@ copy the student's final answer, if any. In verification test that answer agains
 (for equations, substitute it into both sides and evaluate). In checkedSteps copy each intermediate
 line the student actually wrote, recompute that line yourself, and mark whether the two agree.
 Compare against the student's literal line before correcting it. An appropriate operation can still
-have an arithmetic error. Leave checkedSteps empty when the student gave only a final answer.
+have an arithmetic error. Also check whether the operation fits the original problem: replacing
+3 × 4 with 3 + 4 is an incorrect step even though 3 + 4 equals 7.
+Leave checkedSteps empty when the student gave only a final answer.
 Set answerVerdict by comparing only these two answers. A bad intermediate step cannot make a correct final answer wrong.
 A correct result cannot make a bad step correct.
 For partial work, check the steps provided and mark the final answer missing. The page supplies the verdict sentence.
 Write mistakeFeedback only when a step or the final answer is wrong. If the work shows a mistake,
-point to the first incorrect step and explain how to fix it. If you only have a wrong answer, look for
+point to the first incorrect step, show one specific change to try and explain why it works.
+Use matter-of-fact wording such as “Adding gives 7. Here we need three equal groups of four.”
+If you only have a wrong answer, look for
 one simple mix-up that actually produces that answer. In matchingCalculation write that mistaken
 calculation (e.g. "3 + 4 = 7" for 3 × 4 answered as 7). Use null if no such calculation is evident
 or if the student already showed the error. The correct solution does not count as a matchingCalculation.
@@ -150,7 +160,7 @@ export async function askAI(mode, question, photo, grade = null) {
           missing: 'Let’s check the work you have so far.',
         }[result.answerVerdict];
         const workLabel = {
-          correct: 'The steps you showed are correct.',
+          correct: result.answerVerdict === 'incorrect' ? '' : 'The steps you showed are correct.',
           incorrect: 'One of your steps needs a correction.',
           none: '',
         }[workVerdict];
@@ -159,7 +169,8 @@ export async function askAI(mode, question, photo, grade = null) {
         const hasClue = workVerdict === 'incorrect' || result.matchingCalculation?.trim();
         const feedback = hasClue && result.mistakeFeedback.trim()
           || 'Can you show your steps so we can find where the answer changed?';
-        const paragraphs = [verdict, hasMistake && feedback, result.explanation];
+        const acknowledgement = result.discouraged && 'This can feel frustrating. Let’s look at the math together.';
+        const paragraphs = [acknowledgement, verdict, hasMistake && feedback, result.explanation];
         return {kind: 'lesson', explanation: paragraphs.filter(Boolean).join('\n\n'),
           table: result.table, takeaway: result.takeaway};
       }
@@ -217,6 +228,7 @@ const conceptFormat = replyFormat('lesson', {
   ]},
 });
 const checkFormat = replyFormat('answer_check', {
+    discouraged: {type: 'boolean'},
     expectedAnswer: string, submittedAnswer: string, verification: string,
     answerVerdict: {type: 'string', enum: ['correct', 'incorrect', 'missing']},
     checkedSteps: list(record({studentStep: string, recomputedStep: string, correct: {type: 'boolean'}})),

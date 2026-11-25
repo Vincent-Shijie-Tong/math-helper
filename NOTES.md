@@ -44,6 +44,8 @@ Requests for help hurting someone or doing something dangerous get one sentence 
 
 In **Check my work**, the tutor copies and recalculates each submitted step before judging the work. A correct final answer can still have a wrong step.
 
+Students can ask “Which step should I change?” or use the multiplication example in **Check my work**. The tutor explains the calculation kindly, shows a specific change to try, and gives a way to check it. If the student sounds discouraged, the tutor acknowledges that feeling and focuses on the next math step.
+
 ## Next
 
 Rehearse the short demo. Start with the fraction quiz example, check an incorrect multiplication answer, then tick a study goal and reload. Ask your teacher to check the explanations before your competition video.
@@ -53,7 +55,6 @@ After each save point, push it to GitHub.
 ## Maybe Later
 
 - The user can get help understanding difficult science concepts.
-- The user can ask the AI to explain mistakes without blame.
 - The user can receive practice questions to prepare for tests.
 - The user can request examples of how to solve specific problems.
 - The user can ask the AI to summarize a topic from class.

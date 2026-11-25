@@ -8,7 +8,7 @@ const activities = {
   study: ['✎', 'Study tips', 'What’s on your math test?', 'My quiz is about comparing fractions. How can I study?', 'Get study tips'],
   homework: ['⌂', 'Homework help', 'Where are you stuck?', 'I have 3 bags of 4 marbles. How do I find the total?', 'Help me start'],
   steps: ['≡', 'Show steps', 'Which problem should we work through?', 'Show me how to solve 42 − 17.', 'Show me the steps'],
-  check: ['✓', 'Check my work', 'What was the problem, and what answer did you get?', 'I think 3 × 4 = 7. Can you check my answer?', 'Check my answer'],
+  check: ['✓', 'Check my work', 'What did you try? Share the problem and your answer or steps. You can ask where a step went off track.', 'I tried 3 × 4. I added 3 + 4 and got 7. Can you explain the step I should change?', 'Check my answer'],
   concept: ['?', 'Explain a concept', 'Which math idea feels confusing?', 'Why is 1/8 smaller than 1/4 when 8 is bigger than 4?', 'Explain this idea'],
 };
 let current = 'study';

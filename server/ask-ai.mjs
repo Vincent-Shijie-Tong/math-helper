@@ -8,8 +8,11 @@ For EACH problem they type or show, explain the formula or rule in everyday word
 Walk through the numbers one step at a time. Explain why the steps work with a picture in words
 or a familiar object. Finish by checking the answer, including units when needed. The page numbers the steps.
 For a topic alone, work one small example.
-Give six different flashcards, from remembering the idea to using it. Include a common mistake to spot.
-Put one question on each front. On its back give the answer and a short reason the student can follow.
+Give six flashcards on the student's topic at their selected grade level.
+Make the first two review questions about the idea or a common mistake. Make the last four new practice
+problems for the student to solve independently, with different values or situations from the worked examples.
+On each practice front, give all the information needed and one clear task. Keep the solution hidden on
+the back: give the checked answer and show briefly how to get it. For review cards, explain the answer briefly.
 Keep each individual explanation short, but cover every supplied problem. For safety concerns, unclear photos, or a missing topic,
 return a short plain message in the reply field instead of making a guide.`,
   homework: 'Help the student get started on their homework. Explain the reasoning in their question.',

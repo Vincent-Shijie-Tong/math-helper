@@ -40,7 +40,7 @@ function showGuide(guide) {
     for (const step of item.steps) addText(steps, 'li', step);
   }
   addText(panel, 'h4', 'Flashcards');
-  addText(panel, 'p', 'Try each question, then tap it to see the answer.');
+  addText(panel, 'p', 'Start with two review cards. Then solve the four practice problems. Tap a card when you’re ready to check your work.');
   for (const card of guide.cards) {
     const details = document.createElement('details');
     addText(details, 'summary', card.question);

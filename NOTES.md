@@ -19,7 +19,7 @@ Use **Your grade** on the left (above the activities on smaller screens) to choo
 
 Study tips come first. Homework help, worked steps and answer checks accept a typed question or a worksheet photo. Choose an activity, type a question or use its example, then press the green button.
 
-In Study tips, enter a test topic or its problems and choose **Get study tips**. Each guide gives three ways to study and six flashcards. Worked examples explain the rule, why the steps work, and how to check the answer. Try answering a card yourself, then tap it to see the answer and the reason.
+In Study tips, enter a test topic or its problems and choose **Get study tips**. Each guide gives three ways to study and six flashcards. The first two cards review ideas. The next four give new problems to solve at the selected grade level. Tap each card to see the answer and how to get it. Worked examples explain the rule, why the steps work, and how to check the answer.
 
 The AI connects through getKey() on the server. MindDo model: `gpt-5.6-luna`.
 Saves on this computer only for now. The browser saves the three sample checklist marks. Questions, photos and replies have no app chat history. The in-app privacy notice explains OpenAI retention.

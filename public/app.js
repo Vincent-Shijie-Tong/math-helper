@@ -1,5 +1,9 @@
 import { tasks, readChecks, writeChecks } from './storage.js';
 const byId = id => document.getElementById(id);
+const gradePicker = byId('grade');
+for (let grade = 1; grade <= 18; grade++) {
+  gradePicker.add(new Option('Grade ' + grade, String(grade)));
+}
 const activities = {
   study: ['✎', 'Study tips', 'What’s on your math test?', 'My quiz is about comparing fractions. How can I study?', 'Get study tips'],
   homework: ['⌂', 'Homework help', 'Where are you stuck?', 'I have 3 bags of 4 marbles. How do I find the total?', 'Help me start'],
@@ -116,12 +120,12 @@ byId('ask-form').onsubmit = async event => {
   if (!question && !photo) return show('Type a math question or add a photo.');
   if (photo && !byId('review').checked) return show('Check the photo for private details first.');
   busy = true;
-  const controls = document.querySelectorAll('form button, form input, form textarea, nav button');
+  const controls = document.querySelectorAll('#grade, form button, form input, form textarea, nav button');
   controls.forEach(el => { el.disabled = true; });
   show('Thinking…');
   try {
     const result = await fetch('/api/ask', {method: 'POST', headers: {'Content-Type':'application/json', Accept:'application/json'},
-      body: JSON.stringify({ mode: current, question, photo })});
+      body: JSON.stringify({ mode: current, question, photo, grade: gradePicker.value ? Number(gradePicker.value) : null })});
     if (result.ok && result.headers.get('content-type')?.includes('application/json')) {
       showGuide(await result.json());
     } else {

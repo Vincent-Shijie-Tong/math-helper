@@ -15,6 +15,8 @@ Checklist marks stay in the browser for each site address. The online site start
 
 ## Version 1
 
+Use **Your grade** on the left (above the activities on smaller screens) to choose levels 1–18. It changes the wording, examples and steps for the next question in every activity. Levels 13–18 represent years after high school. Leaving the picker blank gives elementary explanations. The grade is sent with the question and is not saved by the app.
+
 Study tips come first. Homework help, worked steps and answer checks accept a typed question or a worksheet photo. Choose an activity, type a question or use its example, then press the green button.
 
 In Study tips, enter a test topic or its problems and choose **Get study tips**. Each guide gives three ways to study and six flashcards. Worked examples explain the rule, why the steps work, and how to check the answer. Try answering a card yourself, then tap it to see the answer and the reason.

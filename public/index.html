@@ -8,6 +8,13 @@
 <main>
 <section class="hero"><div><h1>Your math<br><em>study desk.</em></h1><p>Get ready for a test or work through a tricky problem with your own math tutor.</p></div>
 <div class="art" aria-hidden="true"><div class="gridpaper"></div><div class="fraction"><b>¾</b><i></i></div><div class="ruler"></div><div class="times">×</div></div></section>
+<div class="desk-layout">
+<aside class="grade-bar" aria-label="Tutor settings">
+  <label for="grade">Your grade</label>
+  <select id="grade" aria-describedby="grade-help"><option value="">Choose grade</option></select>
+  <p id="grade-help">Choose the level for your next explanation.</p>
+</aside>
+<div class="desk-content">
 <h2>What do you need?</h2><nav id="modes" aria-label="Choose tutoring activity"></nav>
 <div class="workspace"><section class="panel tutoring"><form id="ask-form">
 <h2 id="activity">Study tips</h2><label for="question" id="label">What’s on your math test?</label>
@@ -22,4 +29,4 @@
 <section id="response" hidden><h3>Your tutor</h3><output aria-live="polite"></output><div id="guide"></div></section></section>
 <aside class="panel checklist"><span class="tabmark" aria-hidden="true"></span><h2>My study checklist</h2><p>Try these small study goals.</p><div id="tasks"></div><progress id="progress" max="3" value="0" aria-label="Study goals complete"></progress><small id="count" role="status"></small></aside></div>
 <details id="privacy"><summary>Who can see my question?</summary><p>Your question and photo go through the Math Helper server to OpenAI. Online, Vercel runs that server. People managing these services may be able to see your question. Math Helper keeps no chat history. Only your checklist marks are saved in this browser.</p><p>OpenAI may keep safety logs for up to 30 days by default. Authorized reviewers may see flagged content, and some safety or legal cases can be kept longer. <a href="https://developers.openai.com/api/docs/guides/your-data" target="_blank" rel="noreferrer">OpenAI data controls</a></p></details>
-</main><script type="module" src="/app.js"></script></body></html>
+</div></div></main><script type="module" src="/app.js"></script></body></html>

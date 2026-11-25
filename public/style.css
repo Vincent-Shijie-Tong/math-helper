@@ -494,3 +494,36 @@ button:hover:enabled,.attach:hover {
 }
 #guide li { margin-bottom: .4rem; }
 #guide h4 { margin-bottom: .4rem; }
+.desk-layout {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 1.25rem;
+}
+.grade-bar {
+  align-self: start;
+  position: sticky;
+  top: 1rem;
+  background: #edf5e9;
+  border: 1px solid #c2d6c5;
+  border-left: 4px solid #316c54;
+  border-radius: 12px;
+  padding: 1rem;
+}
+.grade-bar label { display: block; font-weight: 750; }
+.grade-bar select {
+  width: 100%;
+  margin: .65rem 0;
+  padding: .5rem .25rem;
+  border: 1px solid #8ca792;
+  border-radius: 6px;
+  background: white;
+  color: inherit;
+  font: inherit;
+}
+.grade-bar p { margin: 0; font-size: .9rem; line-height: 1.4; }
+@media (max-width: 960px) {
+  .desk-layout { grid-template-columns: minmax(0, 1fr); }
+  .grade-bar { position: static; }
+  .grade-bar select { width: auto; min-width: 9rem; margin: 0 0 .4rem .8rem; }
+  .grade-bar label { display: inline; }
+}

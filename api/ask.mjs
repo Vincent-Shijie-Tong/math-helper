@@ -42,13 +42,15 @@ async function handleQuestion(request) {
     let input;
     try { input = type === 'text/plain' ? {mode:'homework', question:body} : JSON.parse(body); }
     catch { return reply('Please send your question again.', 400); }
-    const {mode, question = '', photo = null} = input ?? {};
+    const {mode, question = '', photo = null, grade = null} = input ?? {};
+    if (grade !== null && (!Number.isInteger(grade) || grade < 1 || grade > 18))
+      return reply('Choose a grade from 1 to 18.', 400);
     if (typeof mode !== 'string' || !Object.hasOwn(modes, mode) || typeof question !== 'string' || question.length > 4000)
       return reply('Choose a kind of help and use a shorter question.', 400);
     if (photo !== null && (typeof photo !== 'string' || !/^data:image\/jpeg;base64,\/9j\/[A-Za-z0-9+/]+=*$/.test(photo)))
       return reply('Choose a clear photo of the problem.', 400);
     if (!question.trim() && !photo) return reply('Type a math question or add a photo.', 400);
-    const answer = safetyReply(question) || await askAI(mode, question.trim(), photo);
+    const answer = safetyReply(question) || await askAI(mode, question.trim(), photo, grade);
     if (typeof answer === 'string') return reply(answer);
     if (request.headers.get('accept')?.includes('application/json')) {
       // Older open tabs display the tips in one text field.

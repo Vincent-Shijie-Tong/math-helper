@@ -51,9 +51,10 @@ async function handleQuestion(request) {
     const answer = safetyReply(question) || await askAI(mode, question.trim(), photo);
     if (typeof answer === 'string') return reply(answer);
     if (request.headers.get('accept')?.includes('application/json')) {
-      return Response.json(answer, {headers: {'Cache-Control': 'no-store'}});
+      // Older open tabs display the tips in one text field.
+      return Response.json({...answer, tip: answer.tips.join('\n')}, {headers: {'Cache-Control': 'no-store'}});
     }
-    const lines = [answer.tip];
+    const lines = ['Study tips', ...answer.tips];
     for (const item of answer.problems) {
       lines.push(item.problem, item.formula, ...item.steps.map((step, i) => (i + 1) + '. ' + step));
     }

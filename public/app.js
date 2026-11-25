@@ -22,8 +22,12 @@ function addText(parent, tag, text) {
   return element;
 }
 function showGuide(guide) {
-  show(guide.tip);
+  show('Your study guide is ready.');
   const panel = byId('guide');
+  addText(panel, 'h4', 'Study tips');
+  const tips = document.createElement('ul');
+  panel.append(tips);
+  for (const tip of guide.tips ?? [guide.tip]) addText(tips, 'li', tip);
   for (const item of guide.problems) {
     addText(panel, 'h4', item.problem);
     addText(panel, 'p', 'Math rule: ' + item.formula);

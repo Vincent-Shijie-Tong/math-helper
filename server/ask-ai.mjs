@@ -15,7 +15,13 @@ On each practice front, give all the information needed and one clear task. Keep
 the back: give the checked answer and show briefly how to get it. For review cards, explain the answer briefly.
 Keep each individual explanation short, but cover every supplied problem. For safety concerns, unclear photos, or a missing topic,
 return a short plain message in the reply field instead of making a guide.`,
-  homework: 'Help the student get started on their homework. Explain the reasoning in their question.',
+  homework: `Teach a method the student can use again. For a readable math problem:
+  First give the general formula in words or symbols suited to the selected grade. Explain what each
+  quantity means and what clue in the problem tells us to use that formula. For a concept question,
+  use the relevant math rule and an example instead of inventing a formula.
+  Then use the student's numbers, showing the steps and why they give the answer. Include units when needed.
+  Finish with one similar problem using different numbers. Show how to set it up with the same rule
+  and leave the last step for the student. If information is missing, ask for it before solving.`,
   steps: 'Show simple numbered steps that the student can check.',
   check: 'Check the proposed answer. Explain the first mistake kindly, or show why the answer works.',
 };

@@ -46,6 +46,8 @@ In **Check my work**, the tutor copies and recalculates each submitted step befo
 
 Students can ask “Which step should I change?” or use the multiplication example in **Check my work**. The tutor explains the calculation kindly, shows a specific change to try, and gives a way to check it. If the student sounds discouraged, the tutor acknowledges that feeling and focuses on the next math step.
 
+When an answer or a shown step needs a correction, feedback opens with the step to change or a possible explanation for the answer. **Try this next time** gives one habit to use on similar problems, even if the tutor needs more work to identify the cause.
+
 ## Next
 
 Rehearse the short demo. Start with the fraction quiz example, check an incorrect multiplication answer, then tick a study goal and reload. Ask your teacher to check the explanations before your competition video.

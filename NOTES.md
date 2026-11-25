@@ -36,6 +36,10 @@ All four activities keep tutoring focused on math. Unrelated requests get a shor
 
 Only **Check my work** gives feedback about a student's likely mistake. For example, if a student writes 3 × 4 = 7, the tutor can show that 3 + 4 gives 7 and explain how to count three groups of four. It points to the first wrong step when the student shares their work and asks to see the steps when the answer alone gives no clear clue.
 
+Requests for help hurting someone or doing something dangerous get one sentence in every activity: “I can only help with homework.” Students who report danger or bullying still get guidance to find a trusted adult.
+
+In **Check my work**, the tutor copies and recalculates each submitted step before judging the work. A correct final answer can still have a wrong step.
+
 ## Next
 
 Rehearse the short demo. Start with the fraction quiz example, check an incorrect multiplication answer, then tick a study goal and reload. Ask your teacher to check the explanations before your competition video.

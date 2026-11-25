@@ -4,7 +4,7 @@ import { askAI, modes } from '../server/ask-ai.mjs';
 function safetyReply(question) {
   if (/\b(my (?:password|address|student id|full name) is|[\w.+-]+@[\w.-]+\.[a-z]{2,})/i.test(question))
     return 'Please remove private details and send just the math question.';
-  if (/\b(?:hurt|kill|attack) (?:myself|someone|a classmate|him|her|me)\b/i.test(question))
+  if (/\b(?:hurt|kill|attack) (?:myself|me)\b/i.test(question))
     return 'If someone might be hurt, get a trusted adult immediately. They can help keep everyone safe.';
   if (/\b(?:being bullied|bullying me)\b/i.test(question))
     return 'You deserve to feel safe. Please tell a trusted adult, such as a teacher, what is happening.';

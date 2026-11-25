@@ -28,6 +28,8 @@ Saves on this computer only for now. The browser saves the three sample checklis
 
 Worked math answers teach two related formulas or rules. The tutor explains when to use each one, works through the numbers and units, and connects the results. For example, multiplication finds a rectangle’s area and division checks it by recovering one of its sides. Homework help ends with a similar problem to try. Study guides highlight the formulas and put the detailed solutions on the backs of the flashcards.
 
+**Show steps** was checked with the built-in 42 − 17 example and a worksheet photo of 64 + 28. The tutor explained how to trade a ten for ten ones, found 25, and checked it by adding 17 back. For the photo it explained why 12 ones become 1 ten and 2 ones, giving 92.
+
 ## Next
 
 Rehearse the short demo. Start with the fraction quiz example, check an incorrect multiplication answer, then tick a study goal and reload. Ask your teacher to check the explanations before your competition video.

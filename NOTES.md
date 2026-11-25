@@ -26,7 +26,7 @@ In Study tips, enter a test topic or its problems and choose **Get study tips**.
 The AI connects through getKey() on the server. MindDo model: `gpt-5.6-luna`.
 Saves on this computer only for now. The browser saves the three sample checklist marks. Questions, photos and replies have no app chat history. The in-app privacy notice explains OpenAI retention.
 
-Homework help teaches a reusable formula or math rule, explains why it fits, works through the student's problem, and sets up a similar one to try.
+Tutor explanations now use longer, grade-appropriate lessons. The tutor gives the formula in words, explains its parts and units, substitutes the numbers, and checks the result. Homework help ends with a similar problem to try. Study guides highlight the rule and put the detailed solutions on the backs of the flashcards.
 
 ## Next
 

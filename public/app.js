@@ -34,7 +34,8 @@ function showGuide(guide) {
   for (const tip of guide.tips ?? [guide.tip]) addText(tips, 'li', tip);
   for (const item of guide.problems) {
     addText(panel, 'h4', item.problem);
-    addText(panel, 'p', 'Math rule: ' + item.formula);
+    const rule = addText(panel, 'p', item.formula);
+    rule.className = 'study-formula';
     const steps = document.createElement('ol');
     panel.append(steps);
     for (const step of item.steps) addText(steps, 'li', step);

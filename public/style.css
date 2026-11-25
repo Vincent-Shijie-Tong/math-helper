@@ -494,6 +494,14 @@ button:hover:enabled,.attach:hover {
 }
 #guide li { margin-bottom: .4rem; }
 #guide h4 { margin-bottom: .4rem; }
+#guide .study-formula {
+  padding: .75rem 1rem;
+  border-left: 4px solid #316c54;
+  background: #edf5e9;
+  font-weight: 650;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
 .desk-layout {
   display: grid;
   grid-template-columns: 10rem minmax(0, 1fr);

@@ -3,6 +3,14 @@ import { DisplayError, discardKey, getKey } from './key.mjs';
 const homeworkOnly = 'I can only help with homework.';
 
 export const modes = {
+  practice: `Create three different, self-contained math practice questions on the student's test topic
+at the selected grade. If they attach a readable worksheet, use its skills to make fresh problems.
+If no math topic is identifiable, ask which topic to practice using message. Follow the usual safety
+and off-topic rules. Start with a warm-up, then use the idea in two different ways. Provide every
+number, unit or condition needed. Put only the problem in question. Fill in answer with the actual
+verified result and reasoning with the calculation or explanation that proves it. Write both now
+for every question. Use a few short sentences. Leave all interface instructions to the page.
+Practice sets omit the lesson table, table commentary and extra formula sections.`,
   concept: `Explain the math idea named in the question or shown in the photo. A topic by itself is enough.
 If the student hasn't identified an idea, use message to ask which math concept is confusing.
 Start by saying what the idea means in words suited to the student's grade. Address their specific
@@ -242,11 +250,11 @@ function replyFormat(name, fields) {
       record({kind: kind('unsafe_request')}),
       record({kind: kind('off_topic')}),
       record({kind: kind('message'), message: string}),
-      record({kind: kind(name), ...fields, ...tableFields}),
+      record({kind: kind(name), ...fields}),
     ]}}),
   };
 }
-const lessonFormat = replyFormat('lesson', {explanation: string});
+const lessonFormat = replyFormat('lesson', {explanation: string, ...tableFields});
 const sliceCount = {type: 'integer', minimum: 1, maximum: 24};
 const conceptFormat = replyFormat('lesson', {
   explanation: string,
@@ -256,6 +264,7 @@ const conceptFormat = replyFormat('lesson', {
     })), minItems: 1, maxItems: 4}}),
     record({kind: kind('flow'), caption: string, stages: {...list(string), minItems: 2, maxItems: 5}}),
   ]},
+  ...tableFields,
 });
 const checkFormat = replyFormat('answer_check', {
     discouraged: {type: 'boolean'},
@@ -265,10 +274,15 @@ const checkFormat = replyFormat('answer_check', {
     matchingCalculation: {type: ['string', 'null']}, mistakeFeedback: string,
     nextTimeTip: {type: 'string', minLength: 1},
     explanation: string,
+    ...tableFields,
 });
 const studyFormat = replyFormat('study_guide', {
     tips: {...list(string), minItems: 3, maxItems: 3},
     problems: list(record({problem: string, formulas: {...list(string), minItems: 2}, steps: list(string)})),
     cards: {...list(record({question: string, answer: string})), minItems: 6, maxItems: 6},
+    ...tableFields,
 });
-const formats = {study: studyFormat, check: checkFormat, homework: lessonFormat, steps: lessonFormat, concept: conceptFormat};
+const practiceFormat = replyFormat('practice_set', {
+  questions: {...list(record({question: string, answer: string, reasoning: string})), minItems: 3, maxItems: 3},
+});
+const formats = {study: studyFormat, check: checkFormat, homework: lessonFormat, steps: lessonFormat, concept: conceptFormat, practice: practiceFormat};

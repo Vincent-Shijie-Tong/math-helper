@@ -52,6 +52,14 @@ async function handleQuestion(request) {
     if (!question.trim() && !photo) return reply('Type a math question or add a photo.', 400);
     const answer = safetyReply(question) || await askAI(mode, question.trim(), photo, grade);
     if (typeof answer === 'string') return reply(answer);
+    if (answer.kind === 'practice_set') {
+      if (request.headers.get('accept')?.includes('application/json')) {
+        return Response.json(answer, {headers: {'Cache-Control': 'no-store'}});
+      }
+      const questions = answer.questions.map((item, i) => (i + 1) + '. ' + item.question);
+      const solutions = answer.questions.map((item, i) => (i + 1) + '. ' + item.answer + '\n' + item.reasoning);
+      return reply([...questions, 'Worked answers', ...solutions].join('\n\n'));
+    }
     const {table, takeaway} = answer;
     const tableLines = [table.caption, table.leftHeading + ' | ' + table.rightHeading,
       ...table.rows.map(row => row.left + ' | ' + row.right), takeaway];

@@ -10,6 +10,7 @@ const activities = {
   steps: ['≡', 'Show steps', 'Which problem should we work through?', 'Show me how to solve 42 − 17.', 'Show me the steps'],
   check: ['✓', 'Check my work', 'What did you try? Share the problem and your answer or steps. You can ask where a step went off track.', 'I tried 3 × 4. I added 3 + 4 and got 7. Can you explain the step I should change?', 'Check my answer'],
   concept: ['?', 'Explain a concept', 'Which math idea feels confusing?', 'Why is 1/8 smaller than 1/4 when 8 is bigger than 4?', 'Explain this idea'],
+  practice: ['✐', 'Practice questions', 'Which math topic is on your test?', 'My test is about finding the perimeter of rectangles.', 'Make practice questions'],
 };
 let current = 'study';
 let photo = null;
@@ -26,6 +27,24 @@ function addText(parent, tag, text) {
   element.textContent = text;
   parent.append(element);
   return element;
+}
+function addReveal(parent, label, answer) {
+  const details = document.createElement('details');
+  addText(details, 'summary', label);
+  addText(details, 'p', answer);
+  parent.append(details);
+}
+function showPractice(set) {
+  show('Try each question before opening its worked answer.');
+  const questions = document.createElement('ol');
+  questions.className = 'practice-set';
+  byId('guide').append(questions);
+  for (const [index, item] of set.questions.entries()) {
+    const entry = document.createElement('li');
+    addText(entry, 'p', item.question);
+    addReveal(entry, 'Worked answer for question ' + (index + 1), item.answer + '\n\n' + item.reasoning);
+    questions.append(entry);
+  }
 }
 function showGuide(guide) {
   show('Your study guide is ready.');
@@ -46,10 +65,7 @@ function showGuide(guide) {
   addText(panel, 'h4', 'Flashcards');
   addText(panel, 'p', 'Start with two review cards. Then solve the four practice problems. Tap a card when you’re ready to check your work.');
   for (const card of guide.cards) {
-    const details = document.createElement('details');
-    addText(details, 'summary', card.question);
-    addText(details, 'p', card.answer);
-    panel.append(details);
+    addReveal(panel, card.question, card.answer);
   }
 }
 function drawPizza(parent, {total, highlighted}) {
@@ -207,7 +223,9 @@ byId('ask-form').onsubmit = async event => {
       if (lesson.model) showModel(lesson.model);
       showTable(lesson);
     } else if (result.ok && type.includes('application/json')) {
-      showGuide(await result.json());
+      const data = await result.json();
+      if (data.kind === 'practice_set') showPractice(data);
+      else showGuide(data);
     } else {
       show(await result.text() || 'Check your internet connection and try again.');
     }

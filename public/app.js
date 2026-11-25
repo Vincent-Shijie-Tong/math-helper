@@ -17,6 +17,7 @@ let busy = false;
 let readingPhoto = false;
 function show(text) {
   byId('response').hidden = false;
+  byId('concept-model').replaceChildren();
   byId('guide').replaceChildren();
   document.querySelector('output').textContent = text;
 }
@@ -50,6 +51,59 @@ function showGuide(guide) {
     addText(details, 'p', card.answer);
     panel.append(details);
   }
+}
+function drawPizza(parent, {total, highlighted}) {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 240;
+  canvas.setAttribute('aria-hidden', 'true');
+  const ctx = canvas.getContext('2d');
+  const turn = 2 * Math.PI / total;
+  for (let i = 0; i < total; i++) {
+    const angle = i * turn - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(120, 120);
+    ctx.arc(120, 120, 108, angle, angle + turn);
+    ctx.closePath();
+    ctx.fillStyle = i < highlighted ? '#ffba4c' : '#fff7e4';
+    ctx.fill();
+    ctx.strokeStyle = '#85592c';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    if (i < highlighted) {
+      const middle = angle + turn / 2;
+      ctx.beginPath();
+      ctx.arc(120 + 76 * Math.cos(middle), 120 + 76 * Math.sin(middle), 6, 0, 2 * Math.PI);
+      ctx.fillStyle = '#a54228';
+      ctx.fill();
+    }
+  }
+  ctx.beginPath();
+  ctx.arc(120, 120, 109, 0, 2 * Math.PI);
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = '#a46a36';
+  ctx.stroke();
+  const item = document.createElement('div');
+  item.append(canvas);
+  addText(item, 'strong', highlighted + '/' + total);
+  addText(item, 'span', highlighted + ' of ' + total + ' slices highlighted');
+  parent.append(item);
+}
+function showModel(model) {
+  const figure = document.createElement('figure');
+  addText(figure, 'figcaption', model.caption);
+  if (model.kind === 'pizza') {
+    if (model.pizzas.some(pizza => pizza.highlighted > pizza.total)) return;
+    const row = document.createElement('div');
+    row.className = 'pizza-row';
+    for (const pizza of model.pizzas) drawPizza(row, pizza);
+    figure.append(row);
+  } else {
+    const stages = document.createElement('ol');
+    stages.className = 'model-flow';
+    for (const stage of model.stages) addText(stages, 'li', stage);
+    figure.append(stages);
+  }
+  byId('concept-model').append(figure);
 }
 function showTable({table, takeaway}) {
   const panel = byId('guide');
@@ -150,6 +204,7 @@ byId('ask-form').onsubmit = async event => {
     if (result.ok && type.includes('application/vnd.math-helper.lesson+json')) {
       const lesson = await result.json();
       show(lesson.explanation);
+      if (lesson.model) showModel(lesson.model);
       showTable(lesson);
     } else if (result.ok && type.includes('application/json')) {
       showGuide(await result.json());

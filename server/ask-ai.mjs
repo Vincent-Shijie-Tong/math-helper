@@ -8,6 +8,12 @@ If the student hasn't identified an idea, use message to ask which math concept 
 Start by saying what the idea means in words suited to the student's grade. Address their specific
 "why" question with one familiar example they can picture. Work through it, connecting each change
 to the idea, and explain how they can tell it makes sense. Use the table to compare examples.
+Supply a visual model of that same worked example. For fractions of a whole that fit in up to 24
+equal slices, use pizza: one same-size pizza per fraction, total equal slices for the denominator
+and highlighted slices for the numerator (0 through total). Compare the original fractions in
+the question. Refer to those pizzas in the explanation. For other concepts, use a flow diagram
+with short labels showing the actual numbers or objects at each stage of one concrete example.
+Give the diagram a descriptive caption. Leave the practice question for the student.
 End the explanation with one short question that lets the student try the idea with a new example.`,
   study: `Make a study guide for the student's upcoming math test. Give three different study tips.
 Make each tip an action the student can try with this topic, such as drawing a model, practising from memory,
@@ -200,6 +206,16 @@ function replyFormat(name, fields) {
   };
 }
 const lessonFormat = replyFormat('lesson', {explanation: string});
+const sliceCount = {type: 'integer', minimum: 1, maximum: 24};
+const conceptFormat = replyFormat('lesson', {
+  explanation: string,
+  model: {anyOf: [
+    record({kind: kind('pizza'), caption: string, pizzas: {...list(record({
+      total: sliceCount, highlighted: {...sliceCount, minimum: 0},
+    })), minItems: 1, maxItems: 4}}),
+    record({kind: kind('flow'), caption: string, stages: {...list(string), minItems: 2, maxItems: 5}}),
+  ]},
+});
 const checkFormat = replyFormat('answer_check', {
     expectedAnswer: string, submittedAnswer: string, verification: string,
     answerVerdict: {type: 'string', enum: ['correct', 'incorrect', 'missing']},
@@ -212,4 +228,4 @@ const studyFormat = replyFormat('study_guide', {
     problems: list(record({problem: string, formulas: {...list(string), minItems: 2}, steps: list(string)})),
     cards: {...list(record({question: string, answer: string})), minItems: 6, maxItems: 6},
 });
-const formats = {study: studyFormat, check: checkFormat, homework: lessonFormat, steps: lessonFormat, concept: lessonFormat};
+const formats = {study: studyFormat, check: checkFormat, homework: lessonFormat, steps: lessonFormat, concept: conceptFormat};

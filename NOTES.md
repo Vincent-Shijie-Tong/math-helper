@@ -34,6 +34,8 @@ All activities keep tutoring focused on math. Unrelated requests get a short inv
 
 Choose **Explain a concept**, enter a math topic or a “why” question, then press **Explain this idea**. The tutor explains the idea at the selected grade level, works through a familiar example, and gives a question to try. The built-in example compares 1/8 and 1/4 of the same whole.
 
+Concept lessons display their model above the explanation. The fraction example draws two equal-size pizzas, one cut into eighths and one into quarters, with one slice highlighted on each. Other topics can show a diagram connecting the stages of the worked example.
+
 **Check my work** checks the final answer and any steps the student shares. Choose the activity, enter the problem and your answer (or attach a clear photo), then select **Check my answer**. In live checks, it accepted 2/4 for 1/4 + 1/4, corrected a worksheet showing 5 × 6 = 35, and recognized a correct algebra answer reached through an incorrect step. It also checked unfinished work and asked for the original problem when given only an answer.
 
 Only **Check my work** gives feedback about a student's likely mistake. For example, if a student writes 3 × 4 = 7, the tutor can show that 3 + 4 gives 7 and explain how to count three groups of four. It points to the first wrong step when the student shares their work and asks to see the steps when the answer alone gives no clear clue.

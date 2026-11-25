@@ -485,3 +485,12 @@ button:hover:enabled,.attach:hover {
     padding-top:24px;
   }
 }
+#guide details {
+  padding: .75rem 1rem;
+  margin: .5rem 0;
+  border: 1px solid #c2d6c5;
+  border-radius: .6rem;
+  background: #f1f7ed;
+}
+#guide li { margin-bottom: .4rem; }
+#guide h4 { margin-bottom: .4rem; }

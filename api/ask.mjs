@@ -48,7 +48,17 @@ async function handleQuestion(request) {
     if (photo !== null && (typeof photo !== 'string' || !/^data:image\/jpeg;base64,\/9j\/[A-Za-z0-9+/]+=*$/.test(photo)))
       return reply('Choose a clear photo of the problem.', 400);
     if (!question.trim() && !photo) return reply('Type a math question or add a photo.', 400);
-    return reply(safetyReply(question) || await askAI(mode, question.trim(), photo));
+    const answer = safetyReply(question) || await askAI(mode, question.trim(), photo);
+    if (typeof answer === 'string') return reply(answer);
+    if (request.headers.get('accept')?.includes('application/json')) {
+      return Response.json(answer, {headers: {'Cache-Control': 'no-store'}});
+    }
+    const lines = [answer.tip];
+    for (const item of answer.problems) {
+      lines.push(item.problem, item.formula, ...item.steps.map((step, i) => (i + 1) + '. ' + step));
+    }
+    lines.push('Flashcards', ...answer.cards.map(card => card.question + ' — ' + card.answer));
+    return reply(lines.join('\n'));
   } catch (error) {
     return reply(error instanceof DisplayError ? error.message
       : 'Your tutor could not answer. Check your internet connection and try again.', 502);

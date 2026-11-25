@@ -12,7 +12,33 @@ let busy = false;
 let readingPhoto = false;
 function show(text) {
   byId('response').hidden = false;
+  byId('guide').replaceChildren();
   document.querySelector('output').textContent = text;
+}
+function addText(parent, tag, text) {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  parent.append(element);
+  return element;
+}
+function showGuide(guide) {
+  show(guide.tip);
+  const panel = byId('guide');
+  for (const item of guide.problems) {
+    addText(panel, 'h4', item.problem);
+    addText(panel, 'p', 'Math rule: ' + item.formula);
+    const steps = document.createElement('ol');
+    panel.append(steps);
+    for (const step of item.steps) addText(steps, 'li', step);
+  }
+  addText(panel, 'h4', 'Flashcards');
+  addText(panel, 'p', 'Try each question, then tap it to see the answer.');
+  for (const card of guide.cards) {
+    const details = document.createElement('details');
+    addText(details, 'summary', card.question);
+    addText(details, 'p', card.answer);
+    panel.append(details);
+  }
 }
 function removePhoto() {
   photo = null;
@@ -90,9 +116,13 @@ byId('ask-form').onsubmit = async event => {
   controls.forEach(el => { el.disabled = true; });
   show('Thinking…');
   try {
-    const result = await fetch('/api/ask', {method: 'POST', headers: {'Content-Type':'application/json'},
+    const result = await fetch('/api/ask', {method: 'POST', headers: {'Content-Type':'application/json', Accept:'application/json'},
       body: JSON.stringify({ mode: current, question, photo })});
-    show(await result.text() || 'Check your internet connection and try again.');
+    if (result.ok && result.headers.get('content-type')?.includes('application/json')) {
+      showGuide(await result.json());
+    } else {
+      show(await result.text() || 'Check your internet connection and try again.');
+    }
   } catch { show('Check your internet connection and try again.'); }
   finally {
     busy = false;

@@ -1,7 +1,13 @@
 import { DisplayError, discardKey, getKey } from './key.mjs';
 
 export const modes = {
-  study: 'Help prepare for the stated math test with a short, specific study tip and an activity the student can try.',
+  study: `Make a study guide for the student's upcoming math test. Give one practical study tip.
+For EACH problem they type or show, include its formula (or math rule in words), and numbered steps
+from the given numbers to the checked answer with units. The page numbers the steps; omit number prefixes.
+For a topic alone, work one small example.
+Give at least two flashcards on that topic, each with a question on the front and its answer on the back.
+Keep it short, but cover every supplied problem. For safety concerns, unclear photos, or a missing topic,
+return a short plain message in the reply field instead of making a guide.`,
   homework: 'Help the student get started on their homework. Explain the reasoning in their question.',
   steps: 'Show simple numbered steps that the student can check.',
   check: 'Check the proposed answer. Explain the first mistake kindly, or show why the answer works.',
@@ -29,6 +35,7 @@ export async function askAI(mode, question, photo) {
       body: JSON.stringify({
         model: 'gpt-5.6-luna', store: false, instructions: instructions + '\n' + modes[mode],
         input: [{ role: 'user', content }],
+        ...(mode === 'study' && {text: {format: studyFormat}}),
       }),
       signal: AbortSignal.timeout(90000), redirect: 'error',
     });
@@ -45,8 +52,26 @@ export async function askAI(mode, question, photo) {
     const data = await response.json();
     const answer = (data.output ?? []).flatMap(item => item.content ?? [])
       .map(part => part.type === 'output_text' ? part.text : part.refusal).filter(Boolean).join('\n');
-    if (answer.trim()) return answer;
+    if (answer.trim()) {
+      const refused = data.output?.some(item => item.content?.some(part => part.type === 'refusal'));
+      if (mode === 'study' && !refused) return JSON.parse(answer).reply;
+      return answer;
+    }
     break;
   }
   throw new DisplayError('Your tutor could not answer. Check your internet connection and try again.');
 }
+
+const string = {type: 'string'};
+const list = items => ({type: 'array', items});
+const record = properties => ({
+  type: 'object', properties, required: Object.keys(properties), additionalProperties: false,
+});
+const studyFormat = {
+  type: 'json_schema', name: 'study_guide', strict: true,
+  schema: record({reply: {anyOf: [string, record({
+    tip: string,
+    problems: list(record({problem: string, formula: string, steps: list(string)})),
+    cards: list(record({question: string, answer: string})),
+  })]}}),
+};

@@ -36,9 +36,22 @@ function addReveal(parent, label, answer) {
 }
 function showPractice(set) {
   show('Try each question before opening its worked answer.');
+  const panel = byId('guide');
+  if (set.tips?.length) {
+    addText(panel, 'h4', 'Tips for this topic');
+    const tips = document.createElement('ul');
+    for (const tip of set.tips) addText(tips, 'li', tip);
+    panel.append(tips);
+  }
+  if (set.formula) {
+    addText(panel, 'h4', 'Formula or rule');
+    addText(panel, 'p', set.formula).className = 'study-formula';
+    addText(panel, 'p', set.howToUse);
+  }
+  addText(panel, 'h4', 'Practice questions');
   const questions = document.createElement('ol');
   questions.className = 'practice-set';
-  byId('guide').append(questions);
+  panel.append(questions);
   for (const [index, item] of set.questions.entries()) {
     const entry = document.createElement('li');
     addText(entry, 'p', item.question);

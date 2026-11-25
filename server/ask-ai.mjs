@@ -10,7 +10,12 @@ and off-topic rules. Start with a warm-up, then use the idea in two different wa
 number, unit or condition needed. Put only the problem in question. Fill in answer with the actual
 verified result and reasoning with the calculation or explanation that proves it. Write both now
 for every question. Use a few short sentences. Leave all interface instructions to the page.
-Practice sets omit the lesson table, table commentary and extra formula sections.`,
+Before the questions, give two short tips specific to the test topic: one for starting a problem
+and one for avoiding a common mix-up or checking the work. In formula, give the general formula
+students can use for this set, or a useful math rule when the topic has no formula. In howToUse,
+explain when to use it and what the symbols mean at the selected grade. Keep these hints general:
+do not plug in the practice numbers or reveal any answers. Use the formula or rule in the worked
+solutions where relevant. Practice sets omit lesson tables and table commentary.`,
   concept: `Explain the math idea named in the question or shown in the photo. A topic by itself is enough.
 If the student hasn't identified an idea, use message to ask which math concept is confusing.
 Start by saying what the idea means in words suited to the student's grade. Address their specific
@@ -283,6 +288,8 @@ const studyFormat = replyFormat('study_guide', {
     ...tableFields,
 });
 const practiceFormat = replyFormat('practice_set', {
+  tips: {...list({type: 'string', minLength: 1}), minItems: 2, maxItems: 2},
+  formula: {type: 'string', minLength: 1}, howToUse: {type: 'string', minLength: 1},
   questions: {...list(record({question: string, answer: string, reasoning: string})), minItems: 3, maxItems: 3},
 });
 const formats = {study: studyFormat, check: checkFormat, homework: lessonFormat, steps: lessonFormat, concept: conceptFormat, practice: practiceFormat};

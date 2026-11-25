@@ -58,7 +58,8 @@ async function handleQuestion(request) {
       }
       const questions = answer.questions.map((item, i) => (i + 1) + '. ' + item.question);
       const solutions = answer.questions.map((item, i) => (i + 1) + '. ' + item.answer + '\n' + item.reasoning);
-      return reply([...questions, 'Worked answers', ...solutions].join('\n\n'));
+      return reply(['Tips for this topic', ...answer.tips, 'Formula or rule', answer.formula,
+        answer.howToUse, 'Practice questions', ...questions, 'Worked answers', ...solutions].join('\n\n'));
     }
     const {table, takeaway} = answer;
     const tableLines = [table.caption, table.leftHeading + ' | ' + table.rightHeading,

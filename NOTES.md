@@ -48,7 +48,7 @@ Students can ask “Which step should I change?” or use the multiplication exa
 
 When an answer or a shown step needs a correction, feedback opens with the step to change or a possible explanation for the answer. **Try this next time** gives one habit to use on similar problems, even if the tutor needs more work to identify the cause.
 
-Choose **Practice questions**, select your grade and enter a math test topic or use the rectangle perimeter example. **Make practice questions** gives three problems to try. Open the worked answer under each question to see the steps and check your work.
+Choose **Practice questions**, select your grade and enter a math test topic or use the rectangle perimeter example. Each set starts with two topic tips and a formula or rule with an explanation of how to use it. Try the three problems, then open each worked answer to check your steps.
 
 ## Next
 

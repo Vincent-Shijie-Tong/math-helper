@@ -19,6 +19,8 @@ Use **Your grade** on the left (above the activities on smaller screens) to choo
 
 Study tips come first. Homework help, worked steps and answer checks accept a typed question or a worksheet photo. Choose an activity, type a question or use its example, then press the green button.
 
+Homework help works whenever the server is running and can reach the AI. To try it, choose **Homework help**, select **Use example question**, and press **Help me start**. In the local check, the tutor explained why three bags of four make 12 marbles and solved 37 + 26 from a worksheet photo by regrouping to get 63.
+
 In Study tips, enter a test topic or its problems and choose **Get study tips**. Each guide gives three ways to study and six flashcards. The first two cards review ideas. The next four give new problems to solve at the selected grade level. Tap each card to see the answer and how to get it. Worked examples explain the rule, why the steps work, and how to check the answer.
 
 The AI connects through getKey() on the server. MindDo model: `gpt-5.6-luna`.

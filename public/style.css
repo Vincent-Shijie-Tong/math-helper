@@ -535,3 +535,13 @@ button:hover:enabled,.attach:hover {
   .grade-bar select { width: auto; min-width: 9rem; margin: 0 0 .4rem .8rem; }
   .grade-bar label { display: inline; }
 }
+#guide table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 1.25rem;
+  overflow-wrap: anywhere;
+}
+#guide caption { text-align: left; font-weight: 700; margin-bottom: .5rem; }
+#guide th, #guide td { text-align: left; vertical-align: top; padding: .65rem; border: 1px solid #baceb9; }
+#guide th { background: #edf5e9; }

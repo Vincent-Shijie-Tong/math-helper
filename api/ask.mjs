@@ -52,6 +52,15 @@ async function handleQuestion(request) {
     if (!question.trim() && !photo) return reply('Type a math question or add a photo.', 400);
     const answer = safetyReply(question) || await askAI(mode, question.trim(), photo, grade);
     if (typeof answer === 'string') return reply(answer);
+    const {table, takeaway} = answer;
+    const tableLines = [table.caption, table.leftHeading + ' | ' + table.rightHeading,
+      ...table.rows.map(row => row.left + ' | ' + row.right), takeaway];
+    if (answer.kind === 'lesson') {
+      if (request.headers.get('accept')?.includes('application/vnd.math-helper.lesson+json')) {
+        return Response.json(answer, {headers: {'Cache-Control': 'no-store', 'Content-Type':'application/vnd.math-helper.lesson+json'}});
+      }
+      return reply([answer.explanation, ...tableLines].join('\n\n'));
+    }
     if (request.headers.get('accept')?.includes('application/json')) {
       // Older open tabs display the tips in one text field.
       return Response.json({...answer, tip: answer.tips.join('\n')}, {headers: {'Cache-Control': 'no-store'}});
@@ -60,7 +69,7 @@ async function handleQuestion(request) {
     for (const item of answer.problems) {
       lines.push(item.problem, item.formula, ...item.steps.map((step, i) => (i + 1) + '. ' + step));
     }
-    lines.push('Flashcards', ...answer.cards.map(card => card.question + ' — ' + card.answer));
+    lines.push(...tableLines, 'Flashcards', ...answer.cards.map(card => card.question + ' — ' + card.answer));
     return reply(lines.join('\n'));
   } catch (error) {
     return reply(error instanceof DisplayError ? error.message

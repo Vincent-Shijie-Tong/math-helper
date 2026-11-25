@@ -40,6 +40,7 @@ function showGuide(guide) {
     panel.append(steps);
     for (const step of item.steps) addText(steps, 'li', step);
   }
+  if (guide.table) showTable(guide);
   addText(panel, 'h4', 'Flashcards');
   addText(panel, 'p', 'Start with two review cards. Then solve the four practice problems. Tap a card when you’re ready to check your work.');
   for (const card of guide.cards) {
@@ -48,6 +49,23 @@ function showGuide(guide) {
     addText(details, 'p', card.answer);
     panel.append(details);
   }
+}
+function showTable({table, takeaway}) {
+  const panel = byId('guide');
+  const grid = document.createElement('table');
+  grid.createCaption().textContent = table.caption;
+  const header = grid.createTHead().insertRow();
+  for (const title of [table.leftHeading, table.rightHeading]) {
+    addText(header, 'th', title).scope = 'col';
+  }
+  const body = grid.createTBody();
+  for (const row of table.rows) {
+    const tr = body.insertRow();
+    addText(tr, 'td', row.left);
+    addText(tr, 'td', row.right);
+  }
+  panel.append(grid);
+  addText(panel, 'p', takeaway);
 }
 function removePhoto() {
   photo = null;
@@ -125,9 +143,14 @@ byId('ask-form').onsubmit = async event => {
   controls.forEach(el => { el.disabled = true; });
   show('Thinking…');
   try {
-    const result = await fetch('/api/ask', {method: 'POST', headers: {'Content-Type':'application/json', Accept:'application/json'},
+    const result = await fetch('/api/ask', {method: 'POST', headers: {'Content-Type':'application/json', Accept:'application/json, application/vnd.math-helper.lesson+json'},
       body: JSON.stringify({ mode: current, question, photo, grade: gradePicker.value ? Number(gradePicker.value) : null })});
-    if (result.ok && result.headers.get('content-type')?.includes('application/json')) {
+    const type = result.headers.get('content-type') ?? '';
+    if (result.ok && type.includes('application/vnd.math-helper.lesson+json')) {
+      const lesson = await result.json();
+      show(lesson.explanation);
+      showTable(lesson);
+    } else if (result.ok && type.includes('application/json')) {
       showGuide(await result.json());
     } else {
       show(await result.text() || 'Check your internet connection and try again.');

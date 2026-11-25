@@ -30,6 +30,8 @@ Worked math answers teach two related formulas or rules. The tutor explains when
 
 **Show steps** was checked with the built-in 42 − 17 example and a worksheet photo of 64 + 28. The tutor explained how to trade a ten for ten ones, found 25, and checked it by adding 17 back. For the photo it explained why 12 ones become 1 ten and 2 ones, giving 92.
 
+All four activities keep tutoring focused on math. Unrelated requests get a short invitation to ask a math question. For mixed questions, the tutor addresses the math part. Worked answers and study guides include a labeled table and explain how its rows help solve or check the problem.
+
 ## Next
 
 Rehearse the short demo. Start with the fraction quiz example, check an incorrect multiplication answer, then tick a study goal and reload. Ask your teacher to check the explanations before your competition video.

@@ -3,6 +3,12 @@ import { DisplayError, discardKey, getKey } from './key.mjs';
 const homeworkOnly = 'I can only help with homework.';
 
 export const modes = {
+  concept: `Explain the math idea named in the question or shown in the photo. A topic by itself is enough.
+If the student hasn't identified an idea, use message to ask which math concept is confusing.
+Start by saying what the idea means in words suited to the student's grade. Address their specific
+"why" question with one familiar example they can picture. Work through it, connecting each change
+to the idea, and explain how they can tell it makes sense. Use the table to compare examples.
+End the explanation with one short question that lets the student try the idea with a new example.`,
   study: `Make a study guide for the student's upcoming math test. Give three different study tips.
 Make each tip an action the student can try with this topic, such as drawing a model, practising from memory,
 or spotting a common mistake. Use a concrete example and tell the student what to look for.
@@ -206,4 +212,4 @@ const studyFormat = replyFormat('study_guide', {
     problems: list(record({problem: string, formulas: {...list(string), minItems: 2}, steps: list(string)})),
     cards: {...list(record({question: string, answer: string})), minItems: 6, maxItems: 6},
 });
-const formats = {study: studyFormat, check: checkFormat, homework: lessonFormat, steps: lessonFormat};
+const formats = {study: studyFormat, check: checkFormat, homework: lessonFormat, steps: lessonFormat, concept: lessonFormat};

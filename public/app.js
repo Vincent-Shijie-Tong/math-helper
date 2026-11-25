@@ -9,6 +9,7 @@ const activities = {
   homework: ['⌂', 'Homework help', 'Where are you stuck?', 'I have 3 bags of 4 marbles. How do I find the total?', 'Help me start'],
   steps: ['≡', 'Show steps', 'Which problem should we work through?', 'Show me how to solve 42 − 17.', 'Show me the steps'],
   check: ['✓', 'Check my work', 'What was the problem, and what answer did you get?', 'I think 3 × 4 = 7. Can you check my answer?', 'Check my answer'],
+  concept: ['?', 'Explain a concept', 'Which math idea feels confusing?', 'Why is 1/8 smaller than 1/4 when 8 is bigger than 4?', 'Explain this idea'],
 };
 let current = 'study';
 let photo = null;

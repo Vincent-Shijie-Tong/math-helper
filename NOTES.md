@@ -30,7 +30,9 @@ Worked math answers teach two related formulas or rules. The tutor explains when
 
 **Show steps** was checked with the built-in 42 − 17 example and a worksheet photo of 64 + 28. The tutor explained how to trade a ten for ten ones, found 25, and checked it by adding 17 back. For the photo it explained why 12 ones become 1 ten and 2 ones, giving 92.
 
-All four activities keep tutoring focused on math. Unrelated requests get a short invitation to ask a math question. For mixed questions, the tutor addresses the math part. Worked answers and study guides include a labeled table and explain how its rows help solve or check the problem.
+All activities keep tutoring focused on math. Unrelated requests get a short invitation to ask a math question. For mixed questions, the tutor addresses the math part. Worked answers and study guides include a labeled table and explain how its rows help solve or check the problem.
+
+Choose **Explain a concept**, enter a math topic or a “why” question, then press **Explain this idea**. The tutor explains the idea at the selected grade level, works through a familiar example, and gives a question to try. The built-in example compares 1/8 and 1/4 of the same whole.
 
 **Check my work** checks the final answer and any steps the student shares. Choose the activity, enter the problem and your answer (or attach a clear photo), then select **Check my answer**. In live checks, it accepted 2/4 for 1/4 + 1/4, corrected a worksheet showing 5 × 6 = 35, and recognized a correct algebra answer reached through an incorrect step. It also checked unfinished work and asked for the original problem when given only an answer.
 

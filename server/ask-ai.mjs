@@ -14,8 +14,9 @@ problems for the student to solve independently, with different values or situat
 On each practice front, give all the information needed and one clear task. Keep the solution hidden on
 the back: show the answer, the calculation or reasoning, and a way to check it. For review cards,
 explain the idea with a concrete example. Keep each front easy to read and put the detail on the back.
-In each worked example, put the general rule in the formula field and begin the steps by identifying
-the quantities and plugging them into the rule. For safety concerns, unclear photos, or a missing topic,
+In each worked example, put two useful formulas or math rules in the formulas list.
+Label each by its job. In the steps, apply each one and explain how the second builds on or checks the first.
+For safety concerns, unclear photos, or a missing topic,
 return a short plain message in the reply field instead of making a guide.`,
   homework: `Teach a method the student can use again. For a readable math problem:
   First give the general formula in words or symbols suited to the selected grade. Explain what each
@@ -33,10 +34,15 @@ Use helpful, comforting language. Give a full lesson for a math question. Aim fo
 for an ordinary problem, using short paragraphs and sentences appropriate to the selected grade.
 Give each detail a job: explain what we know, why the method fits, how the calculation works,
 and how to check the result. For study guides, develop each example and card in its own section.
-When a formula applies, put it on its own line in words first. If you use letters, define each one
-with the student's actual quantities and units. On the next calculation line substitute the numbers,
-then simplify and explain what the final value measures. For example, show square units for area
-and explain what one square unit represents. For a conceptual question, illustrate the rule instead.
+For worked math answers teach at least two relevant relationships. Label each formula by what it finds
+and put it on its own line. Use the first to solve the problem. Use the second for the next part,
+an alternative method or a reverse check. Writing the first formula with numbers plugged in does
+not count as a second formula. For example, area = length × width finds the area of a rectangle;
+width = area ÷ length recovers a known side to check it. Choose relationships specific to the student's topic.
+For EACH one, explain the clue that makes it useful, define unfamiliar symbols using the student's
+quantities and units, substitute the numbers and explain why the operation works. Connect the two
+results in words. Point out one likely mix-up and how to notice it. For a conceptual question,
+use a relevant property and a concrete example or counterexample rather than inventing equations.
 Use plain-text math such as ×, ÷ and cm². The page does not render LaTeX or Markdown.
 Keep clarification questions and safety replies brief.
 Use correct math facts and formulas. Explain how first, give a related problem to try when relevant,
@@ -81,7 +87,13 @@ export async function askAI(mode, question, photo, grade = null) {
       .map(part => part.type === 'output_text' ? part.text : part.refusal).filter(Boolean).join('\n');
     if (answer.trim()) {
       const refused = data.output?.some(item => item.content?.some(part => part.type === 'refusal'));
-      if (mode === 'study' && !refused) return JSON.parse(answer).reply;
+      if (mode === 'study' && !refused) {
+        const guide = JSON.parse(answer).reply;
+        if (typeof guide === 'string') return guide;
+        // The browser and plain-text clients display this field with line breaks.
+        for (const problem of guide.problems) problem.formula = problem.formulas.join('\n\n');
+        return guide;
+      }
       return answer;
     }
     break;
@@ -106,7 +118,7 @@ const studyFormat = {
   type: 'json_schema', name: 'study_guide', strict: true,
   schema: record({reply: {anyOf: [string, record({
     tips: {...list(string), minItems: 3, maxItems: 3},
-    problems: list(record({problem: string, formula: string, steps: list(string)})),
+    problems: list(record({problem: string, formulas: {...list(string), minItems: 2}, steps: list(string)})),
     cards: {...list(record({question: string, answer: string})), minItems: 6, maxItems: 6},
   })]}}),
 };
